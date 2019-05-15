@@ -55,18 +55,10 @@ public class Controleur implements Initializable {
 	
 	@FXML
     void deplacementPersonnage(KeyEvent event) {
-		KeyCode touche = event.getCode();
-		System.out.println("touche");
-		//if ( touche == KeyCode.D)
-			//vueP.deplacementX(1);
-    }
-	
-	@FXML
-    void yes(ActionEvent event) {
-		System.out.println("coucou");
-    }
-	
-	
-	
+
+			if ( event.getCode() == KeyCode.A){
+				vueP.deplacementX(1);
+			}
+		}
 
 }
