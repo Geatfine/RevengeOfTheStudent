@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package modele;
 
 import java.io.BufferedReader;
@@ -9,30 +12,25 @@ public class TraduireTerrain {
 	
 	private File f;
 	
-	private BufferedReader bfr;
 	
 	private String[][] tab;
 	
-	
+	// static final pour taille tableau //class de parametrage / json 
 	public TraduireTerrain (String fichier) throws IOException { 
 		
 		this.f = new File(fichier);
-		this.bfr = new BufferedReader ( new FileReader(f));
 		this.tab = new String[50][50];
-		this.initTab();
+		this.initTerrain();
 		
 	}
 	
-	public BufferedReader getBuffer () {
-		return this.bfr;
-	}
-
 	public String[][] getTab (){
 		return this.tab;
 	}
 	
-	public void initTab () throws IOException {
-		
+	public void initTerrain () throws IOException {
+
+		BufferedReader bfr = new BufferedReader ( new FileReader(f));
 		int i=0;
 		
 		String ligne;

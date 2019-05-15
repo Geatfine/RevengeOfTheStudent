@@ -2,31 +2,31 @@ package modele;
 
 public class Terrain {
 	
-	private String[][] listLine ;
+	private String[][] terrain ;
 	
-	public Terrain (String[][] list) {
+	public Terrain (String[][] terrain) {
 		
-		listLine = list;
+		this.terrain = terrain;
 		
 	}
 	
 	public int getTailleX () {
-		return this.listLine.length;
+		return this.terrain.length;
 	}
 	
 	public int getTailleY() {
-		return this.listLine[0].length;
+		return this.terrain[0].length;
 	}
 	
 	public String[][] getList () {
-		return this.listLine;
+		return this.terrain;
 	}
 	
 	public void AffTerrain () {
 		
-		for (int i = 0; i < listLine.length; i++) {
-			for (int j = 0; j < listLine[0].length; j++) {
-				System.out.print("  " + listLine[i][j]);
+		for (int i = 0; i < terrain.length; i++) {
+			for (int j = 0; j < terrain[0].length; j++) {
+				System.out.print("  " + terrain[i][j]);
 			}
 			System.out.println();
 		}
