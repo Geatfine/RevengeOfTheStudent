@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur.Controleur">
+<BorderPane onKeyPressed="#clavier" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur.Controleur">
    <center>
-      <Pane fx:id="pane" onKeyPressed="#deplacementPersonnage" prefHeight="800.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="pane" onMouseClicked="#souris" prefHeight="800.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <TilePane fx:id="tilePane" prefHeight="800.0" prefWidth="800.0" />
          </children>

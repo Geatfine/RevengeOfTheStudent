@@ -48,10 +48,10 @@ public class VueTerrain {
 		// Recuperation du reste du tile correspondant aux coordonnée du tile sur l'axe X du tileSet
 		int posX = Integer.parseInt(tile.substring(0, tile.length() - 1));
 		
-		System.out.println(posX);
+		//System.out.println(posX);
 		int posY = Character.getNumericValue(cY);//
 
-		System.out.println("Y : " + posY);
+		//System.out.println("Y : " + posY);
 		img.setViewport(new Rectangle2D(posX*16,posY*16,16,16));
 		this.tileP.getChildren().add(img);
 	}

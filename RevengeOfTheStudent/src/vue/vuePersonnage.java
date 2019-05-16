@@ -23,16 +23,35 @@ public class vuePersonnage {
 		this.fichierPerso = new FileInputStream("src/ressources/NewPiskel.png");
 		this.img_perso = new Image(fichierPerso);
 		imgV_perso = new ImageView(img_perso);
-		this.perso = new Personnage("NomTest");
-		perso.setPosition(250, 400);
+		this.perso= new Personnage("toto");
 	}
 	
 	public void initPerso() throws FileNotFoundException{
-		imgV_perso.setViewport(new Rectangle2D(0,0,128,128));
+		//imgV_perso.setViewport(new Rectangle2D(0,0,128,128));
 		
 		this.pane.getChildren().add(imgV_perso);
 	}
-	public void deplacementX (int deplacement) {
-		perso.setPositionX(perso.getCoordX()+deplacement);
+	public void setPositionX (double x) {
+		this.imgV_perso.setLayoutX(x);
 	}
+	public void setPositionY (double y) {
+		this.imgV_perso.setLayoutY(y);
+	}
+	public void deplacementX (int deplacement) {
+		imgV_perso.setTranslateX(imgV_perso.getTranslateX()+deplacement);
+	}
+	public void deplacementY (int deplacement) {
+		imgV_perso.setTranslateY(imgV_perso.getTranslateY()+deplacement);
+	}
+//	public void setImage () throws FileNotFoundException {
+//		this.pane.getChildren().clear();
+//		this.fichierPerso = new FileInputStream("src/ressources/NewPiskel(1).png");
+//		this.img_perso = new Image(fichierPerso);
+//		imgV_perso=new ImageView(img_perso);
+//		initPerso();
+//	}
+	public ImageView getImgVPerso () {
+		return this.imgV_perso;
+	}
+	
 }

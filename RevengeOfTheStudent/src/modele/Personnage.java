@@ -12,8 +12,7 @@ public class Personnage {
 	private Inventaire inventaire;
 	private Accessoire accessoire;
 	private Arme a;
-	private int coordX;
-	private int coordY;
+
 
 	
 	
@@ -25,7 +24,7 @@ public class Personnage {
 		this.mana=0;
 		this.vitesse=1;
 		this.inventaire= new Inventaire();
-
+		moove = new Deplacement (0,0);
 	}
 
 
@@ -59,21 +58,7 @@ public class Personnage {
 		this.defense = defense;
 	}
 
-	public void setPosition(int x, int y){
-		this.coordX=x;
-		this.coordY=y;
-	}
-
-	public int getCoordX () {
-		return this.coordX;
-	}
-	public int getCoordY () {
-		return this.coordY;
-	}
-	public void setPositionX(int x ){
-		this.coordX=x;
-	}
-	public void setPositionY(int y){
-		this.coordY=y;
+	public Deplacement getDeplacement() {
+		return this.moove;
 	}
 }

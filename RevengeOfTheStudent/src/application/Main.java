@@ -11,9 +11,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/vue/vueJeu.fxml"));
+			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("../vue/vueJeu.fxml"));
 			Scene scene = new Scene(root,800,800);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			root.requestFocus();
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Revenge Of The Student");
 			primaryStage.show();
