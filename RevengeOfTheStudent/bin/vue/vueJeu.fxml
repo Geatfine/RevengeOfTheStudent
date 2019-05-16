@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
 
-<BorderPane onKeyPressed="#clavier" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur.Controleur">
+<BorderPane onKeyPressed="#clavier" onKeyReleased="#keyRelease" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur.Controleur">
    <center>
       <Pane fx:id="pane" onMouseClicked="#souris" prefHeight="800.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>

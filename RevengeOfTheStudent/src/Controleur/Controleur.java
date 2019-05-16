@@ -39,7 +39,13 @@ public class Controleur implements Initializable {
 	
 	final BooleanProperty downPressed = new SimpleBooleanProperty(false);
 	final BooleanProperty rightPressed = new SimpleBooleanProperty(false);
+	final BooleanProperty upPressed = new SimpleBooleanProperty(false);
+	final BooleanProperty leftPressed = new SimpleBooleanProperty(false);
 	final BooleanBinding downAndRightPressed = downPressed.and(rightPressed);
+	final BooleanBinding downAndLeftPressed = downPressed.and(leftPressed);
+	final BooleanBinding upAndRightPressed = upPressed.and(rightPressed);
+	final BooleanBinding upAndLeftPressed = upPressed.and(leftPressed);
+
 	
 
 	@Override
@@ -66,27 +72,55 @@ public class Controleur implements Initializable {
 	
 	@FXML
     void clavier(KeyEvent event) throws FileNotFoundException {
-		if(event.getCode() == KeyCode.D) {
-			perso.getDeplacement().setX(perso.getDeplacement().getX().get()+3);
-					}
-		if(event.getCode() == KeyCode.Q) {
-			perso.getDeplacement().setX(perso.getDeplacement().getX().get()-3);
-			//vueP.setImage();
-		}
-		if(event.getCode() == KeyCode.Z) {
-			perso.getDeplacement().setY(perso.getDeplacement().getY().get()-3);
-		}
-		if(event.getCode() == KeyCode.S) {
-			perso.getDeplacement().setY(perso.getDeplacement().getY().get()+3);
-			
-		}
-		if(downAndRightPressed.get()) {
+			if(event.getCode() == KeyCode.D) {
+				perso.getDeplacement().setX(perso.getDeplacement().getX().get()+3);
+					rightPressed.set(true);
+						}
+			if(event.getCode() == KeyCode.Q) {
+				perso.getDeplacement().setX(perso.getDeplacement().getX().get()-3);
+				leftPressed.set(true);
+				//vueP.setImage();
+			}
+			if(event.getCode() == KeyCode.Z) {
 
-			perso.getDeplacement().setX(perso.getDeplacement().getX().get()+3);
-			perso.getDeplacement().setY(perso.getDeplacement().getY().get()+3);
-			
+				upPressed.set(true);
+				perso.getDeplacement().setY(perso.getDeplacement().getY().get()-3);
+			}
+			if(event.getCode() == KeyCode.S) {
+				perso.getDeplacement().setY(perso.getDeplacement().getY().get()+3);
+				downPressed.set(true);
+				
+			}
+			// bas droite
+			if(downAndRightPressed.get()) {
+				perso.getDeplacement().setX(perso.getDeplacement().getX().get()+3);
+				perso.getDeplacement().setY(perso.getDeplacement().getY().get()+3);
+			}
+			if (downAndLeftPressed.get()){
+				perso.getDeplacement().setX(perso.getDeplacement().getX().get()-3);
+				perso.getDeplacement().setY(perso.getDeplacement().getY().get()+3);
+			}
+			if (upAndLeftPressed.get()) {
+				perso.getDeplacement().setY(perso.getDeplacement().getY().get()-3);
+				perso.getDeplacement().setX(perso.getDeplacement().getX().get()-3);
+			}
+			if (upAndRightPressed.get()){
+				perso.getDeplacement().setY(perso.getDeplacement().getY().get()-3);
+				perso.getDeplacement().setX(perso.getDeplacement().getX().get()+3);
+			}
 		}
-    }
+		@FXML
+    void keyRelease(KeyEvent event) {
+			if (event.getCode() == KeyCode.D)
+				rightPressed.set(false);
+			if(event.getCode() == KeyCode.Q)
+				leftPressed.set(false);
+			if (event.getCode() == KeyCode.Z)
+				upPressed.set(false);
+			if (event.getCode() == KeyCode.S)
+				downPressed.set(false);
+    }	
+		
 	@FXML
     void souris(MouseEvent event) {
 		System.out.println("fghjklm");
