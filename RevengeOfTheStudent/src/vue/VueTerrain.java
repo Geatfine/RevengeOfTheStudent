@@ -16,14 +16,14 @@ public class VueTerrain {
 	private Image imgTileSet;
 	private ImageView afficheCarre;
 
-	public VueTerrain(Terrain terrain,TilePane tileP) {
+	public VueTerrain(Terrain terrain,TilePane tileP) throws FileNotFoundException {
 
 		this.terrain=terrain;
 		this.tileP=tileP;
-
+		initTerrain();
 	}
 	
-	public void initMap() throws FileNotFoundException {
+	public void initTerrain() throws FileNotFoundException {
 		FileInputStream fichierTileSet = new FileInputStream("src/ressources/Grassland_Terrain_Tileset.png");
 		this.imgTileSet = new Image(fichierTileSet);
 		

@@ -1,3 +1,4 @@
+
 package Controleur;
 
 import java.io.FileNotFoundException;
@@ -8,7 +9,6 @@ import java.util.ResourceBundle;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.KeyCode;
@@ -32,11 +32,11 @@ public class Controleur implements Initializable {
 
 	private Terrain terrain;
 
-	private VueTerrain vueT;
-	private vuePersonnage vueP;
-	
+	private VueTerrain vueTerrain;
+	private vuePersonnage vuePerso;
+
 	private Personnage perso;
-	
+
 	final BooleanProperty downPressed = new SimpleBooleanProperty(false);
 	final BooleanProperty rightPressed = new SimpleBooleanProperty(false);
 	final BooleanProperty upPressed = new SimpleBooleanProperty(false);
@@ -46,85 +46,75 @@ public class Controleur implements Initializable {
 	final BooleanBinding upAndRightPressed = upPressed.and(rightPressed);
 	final BooleanBinding upAndLeftPressed = upPressed.and(leftPressed);
 
-	
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
-			TraduireTerrain terrainTraduit = new TraduireTerrain("src/ressources/main.csv");
-
-			terrain = new Terrain(terrainTraduit.getTab());
-			//terrain.AffTerrain();
-			vueT = new VueTerrain(terrain, tilePane);
-			this.perso = new Personnage("test");
-			vueP = new vuePersonnage(pane);
-			vueP.initPerso();
-			vueT.initMap();
-
-			vueP.getImgVPerso().translateYProperty().bind(perso.getDeplacement().getY());
-			vueP.getImgVPerso().translateXProperty().bind(perso.getDeplacement().getX());
 			
-			
+
+			terrain = new Terrain(new TraduireTerrain("src/ressources/main.csv").getTab());
+			vueTerrain = new VueTerrain(terrain, tilePane);
+			this.perso = new Personnage("Chang");
+			vuePerso = new vuePersonnage(pane);
+
+			vuePerso.getImgVPerso().translateYProperty().bind(perso.getDeplacement().getY());
+			vuePerso.getImgVPerso().translateXProperty().bind(perso.getDeplacement().getX());
+
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	@FXML
-    void clavier(KeyEvent event) throws FileNotFoundException {
-			if(event.getCode() == KeyCode.D) {
-				perso.getDeplacement().setX(perso.getDeplacement().getX().get()+3);
-					rightPressed.set(true);
-						}
-			if(event.getCode() == KeyCode.Q) {
-				perso.getDeplacement().setX(perso.getDeplacement().getX().get()-3);
-				leftPressed.set(true);
-				//vueP.setImage();
-			}
-			if(event.getCode() == KeyCode.Z) {
 
-				upPressed.set(true);
-				perso.getDeplacement().setY(perso.getDeplacement().getY().get()-3);
-			}
-			if(event.getCode() == KeyCode.S) {
-				perso.getDeplacement().setY(perso.getDeplacement().getY().get()+3);
-				downPressed.set(true);
-				
-			}
-			// bas droite
-			if(downAndRightPressed.get()) {
-				perso.getDeplacement().setX(perso.getDeplacement().getX().get()+3);
-				perso.getDeplacement().setY(perso.getDeplacement().getY().get()+3);
-			}
-			if (downAndLeftPressed.get()){
-				perso.getDeplacement().setX(perso.getDeplacement().getX().get()-3);
-				perso.getDeplacement().setY(perso.getDeplacement().getY().get()+3);
-			}
-			if (upAndLeftPressed.get()) {
-				perso.getDeplacement().setY(perso.getDeplacement().getY().get()-3);
-				perso.getDeplacement().setX(perso.getDeplacement().getX().get()-3);
-			}
-			if (upAndRightPressed.get()){
-				perso.getDeplacement().setY(perso.getDeplacement().getY().get()-3);
-				perso.getDeplacement().setX(perso.getDeplacement().getX().get()+3);
-			}
+	@FXML
+	void clavier(KeyEvent event) throws FileNotFoundException {
+		if(event.getCode() == KeyCode.D) {
+			perso.getDeplacement().deplacementDroite();
+			rightPressed.set(true);
 		}
-		@FXML
-    void keyRelease(KeyEvent event) {
-			if (event.getCode() == KeyCode.D)
-				rightPressed.set(false);
-			if(event.getCode() == KeyCode.Q)
-				leftPressed.set(false);
-			if (event.getCode() == KeyCode.Z)
-				upPressed.set(false);
-			if (event.getCode() == KeyCode.S)
-				downPressed.set(false);
-    }	
-		
+		if(event.getCode() == KeyCode.Q) {
+			perso.getDeplacement().deplacementGauche();
+			leftPressed.set(true);
+		}
+		if(event.getCode() == KeyCode.Z) {
+			perso.getDeplacement().deplacementHaut();
+			upPressed.set(true);
+		}
+		if(event.getCode() == KeyCode.S) {
+			perso.getDeplacement().deplacementBas();
+			downPressed.set(true);
+		}
+		// bas droite
+		if(downAndRightPressed.get()) {
+			perso.getDeplacement().deplacementBasDroite();
+		}
+		if (downAndLeftPressed.get()){
+			perso.getDeplacement().deplacementBasGauche();
+		}
+		if (upAndLeftPressed.get()) {
+			perso.getDeplacement().deplacementHautGauche();
+		}
+		if (upAndRightPressed.get()){
+			perso.getDeplacement().deplacementHautDroite();
+		}
+	}
 	@FXML
-    void souris(MouseEvent event) {
-		System.out.println("fghjklm");
+	void keyRelease(KeyEvent event) {
+		if (event.getCode() == KeyCode.D)
+			rightPressed.set(false);
+		if(event.getCode() == KeyCode.Q)
+			leftPressed.set(false);
+		if (event.getCode() == KeyCode.Z)
+			upPressed.set(false);
+		if (event.getCode() == KeyCode.S)
+			downPressed.set(false);
+	}	
 
-    }
+	@FXML
+	void souris(MouseEvent event) {
+		
+
+	}
 
 }

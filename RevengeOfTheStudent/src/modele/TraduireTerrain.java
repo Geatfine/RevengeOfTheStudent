@@ -48,5 +48,6 @@ public class TraduireTerrain {
 			i++;
 			
 		}
+		bfr.close();
 	}
 }

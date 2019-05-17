@@ -16,14 +16,13 @@ public class vuePersonnage {
 	private Image img_perso;
 	private FileInputStream fichierPerso;
 	private ImageView imgV_perso;
-	private Personnage perso;
 	
 	public vuePersonnage(Pane pane) throws FileNotFoundException {
 		this.pane = pane;
 		this.fichierPerso = new FileInputStream("src/ressources/NewPiskel.png");
 		this.img_perso = new Image(fichierPerso);
 		imgV_perso = new ImageView(img_perso);
-		this.perso= new Personnage("toto");
+		initPerso();
 	}
 	
 	public void initPerso() throws FileNotFoundException{
@@ -31,18 +30,14 @@ public class vuePersonnage {
 		
 		this.pane.getChildren().add(imgV_perso);
 	}
-	public void setPositionX (double x) {
-		this.imgV_perso.setLayoutX(x);
-	}
-	public void setPositionY (double y) {
-		this.imgV_perso.setLayoutY(y);
-	}
-	public void deplacementX (int deplacement) {
+	
+	
+	/*public void deplacementX (int deplacement) {
 		imgV_perso.setTranslateX(imgV_perso.getTranslateX()+deplacement);
 	}
 	public void deplacementY (int deplacement) {
 		imgV_perso.setTranslateY(imgV_perso.getTranslateY()+deplacement);
-	}
+	}*/
 //	public void setImage () throws FileNotFoundException {
 //		this.pane.getChildren().clear();
 //		this.fichierPerso = new FileInputStream("src/ressources/NewPiskel(1).png");
