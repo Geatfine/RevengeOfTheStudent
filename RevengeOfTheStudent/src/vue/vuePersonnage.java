@@ -15,20 +15,21 @@ public class vuePersonnage {
 	private Pane pane;
 	private Image img_perso;
 	private FileInputStream fichierPerso;
-	private ImageView imgV_perso;
+	//private ImageView imgV_perso;
 	
 	public vuePersonnage(Pane pane) throws FileNotFoundException {
 		this.pane = pane;
 		this.fichierPerso = new FileInputStream("src/ressources/NewPiskel.png");
 		this.img_perso = new Image(fichierPerso);
-		imgV_perso = new ImageView(img_perso);
-		initPerso();
+		ImageView imgV_perso = new ImageView(img_perso);
+		initPerso(imgV_perso);
 	}
 	
-	public void initPerso() throws FileNotFoundException{
+	public void initPerso(ImageView v) throws FileNotFoundException{
 		//imgV_perso.setViewport(new Rectangle2D(0,0,128,128));
 		
-		this.pane.getChildren().add(imgV_perso);
+		
+		this.pane.getChildren().add(v);
 	}
 	
 	
