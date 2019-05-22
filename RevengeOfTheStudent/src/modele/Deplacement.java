@@ -2,15 +2,19 @@ package modele;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import modele.Collision;
 
 public class Deplacement {
 
 	private IntegerProperty x;
 	private IntegerProperty y;
+	private Collision collision;
 
-	public Deplacement ( int x, int y) {
+	public Deplacement(int x, int y, Collision collision) {
 		this.x = new SimpleIntegerProperty(x);
 		this.y = new SimpleIntegerProperty(y);
+		this.collision = collision;// voir pour les attributs
+		this.deplacementBas();
 	}
 
 	public IntegerProperty getX() {
@@ -24,38 +28,50 @@ public class Deplacement {
 	public void setX(int x) {
 		this.x.set(x);
 	}
+
 	public void setY(int y) {
 		this.y.set(y);
 	}
 
 	public void deplacementDroite() {
-		this.x.set(this.x.get()+3);
+		if (collision.verifieCaseDroite(this.x.get() / 16, this.y.get() / 16))
+			this.x.set(this.x.get() + 3);
 	}
+
 	public void deplacementGauche() {
-		this.x.set(this.x.get()-3);
+		if (collision.verifieCaseGauche(this.x.get() / 16, this.y.get() / 16))
+			this.x.set(this.x.get() - 3);
 	}
+
 	public void deplacementBas() {
-		this.y.set(this.y.get()+3);
+		if (collision.verifieCaseBas(this.x.get() / 16, this.y.get() / 16)) {
+			this.y.set(this.y.get() + 1);
+			deplacementBas();
+		}
 	}
+
 	public void deplacementHaut() {
-		this.y.set(this.y.get()-3);
+		if (collision.verifieCaseHaut(this.x.get() / 16, this.y.get() / 16))
+			this.y.set(this.y.get() - 3);
 	}
 
 	public void deplacementHautDroite() {
-		this.x.set(this.x.get()+3);
-		this.y.set(this.y.get()-3);
+		this.deplacementHaut();
+		this.deplacementDroite();
 	}
+
 	public void deplacementHautGauche() {
-		this.y.set(this.y.get()-3);
-		this.x.set(this.x.get()-3);
+		this.deplacementHaut();
+		this.deplacementGauche();
 	}
+
 	public void deplacementBasDroite() {
-		this.y.set(this.y.get()+3);
-		this.x.set(this.x.get()+3);
-		
+		this.deplacementBas();
+		this.deplacementDroite();
 	}
+
 	public void deplacementBasGauche() {
-		this.y.set(this.y.get()+3);
-		this.x.set(this.x.get()-3);
+		this.deplacementBas();
+		this.deplacementGauche();
 	}
 }

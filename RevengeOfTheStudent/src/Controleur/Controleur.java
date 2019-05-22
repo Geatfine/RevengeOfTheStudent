@@ -14,8 +14,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import modele.Collision;
 import modele.Personnage;
 import modele.Terrain;
 import modele.TraduireTerrain;
@@ -26,7 +28,8 @@ public class Controleur implements Initializable {
 
 	@FXML
 	private Pane pane;
-
+	@FXML
+	private BorderPane borderPane;
 	@FXML
 	private TilePane tilePane;
 
@@ -34,8 +37,9 @@ public class Controleur implements Initializable {
 
 	private VueTerrain vueTerrain;
 	private vuePersonnage vuePerso;
-
+	private ControleurDeplacement ctlrDeplacement;
 	private Personnage perso;
+	private Collision collision;
 
 	final BooleanProperty downPressed = new SimpleBooleanProperty(false);
 	final BooleanProperty rightPressed = new SimpleBooleanProperty(false);
@@ -46,22 +50,20 @@ public class Controleur implements Initializable {
 	final BooleanBinding upAndRightPressed = upPressed.and(rightPressed);
 	final BooleanBinding upAndLeftPressed = upPressed.and(leftPressed);
 
-
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
-			
 
-			terrain = new Terrain(new TraduireTerrain("src/ressources/main.csv").getTab());
+			terrain = new Terrain(new TraduireTerrain().getTab());
 			vueTerrain = new VueTerrain(terrain, tilePane);
-			this.perso = new Personnage("Chang");
+
+			collision = new Collision(terrain);
+			this.perso = new Personnage("Chang", collision);
 			vuePerso = new vuePersonnage(pane);
 
 			vuePerso.getImgVPerso().translateYProperty().bind(perso.getDeplacement().getY());
 			vuePerso.getImgVPerso().translateXProperty().bind(perso.getDeplacement().getX());
-
-
+			ctlrDeplacement = new ControleurDeplacement(perso, borderPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -69,51 +71,51 @@ public class Controleur implements Initializable {
 
 	@FXML
 	void clavier(KeyEvent event) throws FileNotFoundException {
-		if(event.getCode() == KeyCode.D) {
+		if (event.getCode() == KeyCode.D) {
 			perso.getDeplacement().deplacementDroite();
 			rightPressed.set(true);
 		}
-		if(event.getCode() == KeyCode.Q) {
+		if (event.getCode() == KeyCode.Q) {
 			perso.getDeplacement().deplacementGauche();
 			leftPressed.set(true);
 		}
-		if(event.getCode() == KeyCode.Z) {
+		if (event.getCode() == KeyCode.Z) {
 			perso.getDeplacement().deplacementHaut();
 			upPressed.set(true);
 		}
-		if(event.getCode() == KeyCode.S) {
+		if (event.getCode() == KeyCode.S) {
 			perso.getDeplacement().deplacementBas();
 			downPressed.set(true);
 		}
 		// bas droite
-		if(downAndRightPressed.get()) {
+		if (downAndRightPressed.get()) {
 			perso.getDeplacement().deplacementBasDroite();
 		}
-		if (downAndLeftPressed.get()){
+		if (downAndLeftPressed.get()) {
 			perso.getDeplacement().deplacementBasGauche();
 		}
 		if (upAndLeftPressed.get()) {
 			perso.getDeplacement().deplacementHautGauche();
 		}
-		if (upAndRightPressed.get()){
+		if (upAndRightPressed.get()) {
 			perso.getDeplacement().deplacementHautDroite();
 		}
 	}
+
 	@FXML
 	void keyRelease(KeyEvent event) {
 		if (event.getCode() == KeyCode.D)
 			rightPressed.set(false);
-		if(event.getCode() == KeyCode.Q)
+		if (event.getCode() == KeyCode.Q)
 			leftPressed.set(false);
 		if (event.getCode() == KeyCode.Z)
 			upPressed.set(false);
 		if (event.getCode() == KeyCode.S)
 			downPressed.set(false);
-	}	
+	}
 
 	@FXML
 	void souris(MouseEvent event) {
-		
 
 	}
 
