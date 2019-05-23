@@ -2,9 +2,9 @@ package modele;
 
 public class Terrain {
 	
-	private String[][] terrain ;
+	private int[][] terrain ;
 	
-	public Terrain (String[][] terrain) {
+	public Terrain (int[][] terrain) {
 		
 		this.terrain = terrain;
 		
@@ -18,7 +18,7 @@ public class Terrain {
 		return this.terrain[0].length;
 	}
 	
-	public String[][] getList () {
+	public int[][] getList () {
 		return this.terrain;
 	}
 		

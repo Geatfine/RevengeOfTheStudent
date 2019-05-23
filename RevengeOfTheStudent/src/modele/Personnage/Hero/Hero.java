@@ -2,11 +2,12 @@ package modele.Personnage.Hero;
 
 import javafx.beans.property.StringProperty;
 import modele.Accessoire;
-import modele.Arme;
 import modele.Collision;
 import modele.Deplacement;
 import modele.Epee;
 import modele.Inventaire;
+import modele.Katana;
+import modele.Personnage.Item.Arme;
 
 public class Hero {
 	
@@ -25,12 +26,13 @@ public class Hero {
 	private StringProperty idArme ;
 	private StringProperty idDeplacement;
 	private Collision colision;
+	
 
 	
 	
-	public Hero(String nom) {
+	public Hero(String nom, Collision c) {
 		this.nom=nom;
-		this.a= new Epee();
+		this.a= new Katana();
 		this.hp=100;
 		this.attaque=0;
 		this.defense=0;
@@ -39,10 +41,15 @@ public class Hero {
 		this.inventaire= new Inventaire();
 		this.idArme= this.a.idProperty();
 
-		moove = new Deplacement (0,0);
+		moove = new Deplacement (0,0, c);
+		
 		this.idDeplacement=this.moove.dernierDeplacement;
+		moove.graviter();
 	}
 	
+	public String getIdArme() {
+		return this.idArme.get();
+	}
 	
 	public String action() {
 		return this.idArme.get() + this.idDeplacement.get();

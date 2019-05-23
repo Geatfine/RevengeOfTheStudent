@@ -24,10 +24,9 @@ public class OberservableDirection implements ChangeListener<String>{
 
 	@Override
 	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		System.out.println("CHANGE!!!!!!!!!!!!"+newValue);
-		System.out.println(this.hero.action());
-		this.vue.setStr("epee"+newValue);
-		System.out.println(this.vue.getString());
+		
+		this.vue.setStr(this.hero.getIdArme()+newValue);
+		
 		try {
 			this.vue.setImageV();
 		} catch (FileNotFoundException e) {

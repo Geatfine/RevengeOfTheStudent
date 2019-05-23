@@ -35,8 +35,7 @@ public class Main extends Application {
 		launch(args);
 //		BoucleDeJeu test = new BoucleDeJeu();
 //		test.start();
-		Hero so = new Hero("sofiane");
-		System.out.println(so);
+		
 		
 	}
 }

@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import modele.Collision;
 import modele.Jeu;
 import modele.Terrain;
 import modele.TraduireTerrain;
@@ -38,6 +39,7 @@ public class Controleur implements Initializable {
 	private vuePersonnage vuePerso;
 
 	private Hero perso;
+	private Collision collision;
 	public static char toucheDirection;
 	public static char toucheSaut;
 
@@ -53,27 +55,25 @@ public class Controleur implements Initializable {
 	public static ChargeurDImage chargeurFond;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	
 		
-		
-		Jeu j = new Jeu();
-		try {
-			
-			
-			terrain = new Terrain(new TraduireTerrain("src/ressources/main.csv").getTab());
-			vueTerrain = new VueTerrain(terrain, tilePane);
-			this.perso = new Hero("Chang");
-			vuePerso = new vuePersonnage(pane,perso);
+		public void initialize(URL location, ResourceBundle resources) {
+			try {
 
+				terrain = new Terrain(new TraduireTerrain().getTab());
+				vueTerrain = new VueTerrain(terrain, tilePane);
 
-			vuePerso.getImgVPerso().translateYProperty().bind(perso.getDeplacement().getY());
-			vuePerso.getImgVPerso().translateXProperty().bind(perso.getDeplacement().getX());
+				collision = new Collision(terrain);
+				this.perso = new Hero("Chang", collision);
+				vuePerso = new vuePersonnage(pane, perso);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//Vue V = new Vue();
-		
+				vuePerso.getImgVPerso().translateYProperty().bind(perso.getDeplacement().getY());
+				vuePerso.getImgVPerso().translateXProperty().bind(perso.getDeplacement().getX());
+				//ctlrDeplacement = new ControleurDeplacement(perso, borderPane);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	
 		OberservableDirection obs = new OberservableDirection(perso, vuePerso);
 		perso.idDeplacementProperty().addListener(obs);
 	}

@@ -7,8 +7,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import modele.Arme;
 import modele.Personnage.Hero.Hero;
+import modele.Personnage.Item.Arme;
 
 public class vuePerso {
 	
