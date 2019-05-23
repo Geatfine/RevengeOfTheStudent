@@ -7,24 +7,24 @@ import javafx.scene.layout.BorderPane;
 import modele.Personnage;
 
 public class ControleurDeplacement {
-	
+
 	private Personnage perso;
-	
+
 	private BorderPane borderPane;
-	
+
 	public ControleurDeplacement(Personnage perso, BorderPane borderPane) {
 		this.perso = perso;
-		this.borderPane=borderPane;
+		this.borderPane = borderPane;
 	}
+
 	public void keyPressed() {
-		borderPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-	        public void handle(KeyEvent ke) {
-	            if (ke.getCode() == KeyCode.ESCAPE) {
-	            }
-	        }
-	    });
+		this.borderPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent ke) {
+				if (ke.getCode() == KeyCode.ESCAPE) {
+					System.out.println("sa marche");
+				}
+			}
+		});
 	}
-	
-	
 
 }

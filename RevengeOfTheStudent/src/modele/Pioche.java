@@ -1,7 +1,7 @@
 package modele;
 
 public class Pioche extends Outils {
-	
+
 	public Pioche() {
 		super("pioche en bois", 4);
 	}
