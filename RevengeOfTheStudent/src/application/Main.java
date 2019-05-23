@@ -1,11 +1,14 @@
 package application;
 	
+import java.security.Permissions;
+
 import Controleur.GameLoop.BoucleDeJeu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import modele.Personnage.Hero.Hero;
 
 /*
  * soulager controlleur
@@ -29,10 +32,11 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
-		//launch(args);
-		BoucleDeJeu test = new BoucleDeJeu();
-		test.start();
+		launch(args);
+//		BoucleDeJeu test = new BoucleDeJeu();
+//		test.start();
+		Hero so = new Hero("sofiane");
+		System.out.println(so);
 		
-		test.stop();
 	}
 }

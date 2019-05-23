@@ -17,9 +17,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import modele.Jeu;
-import modele.Personnage;
 import modele.Terrain;
 import modele.TraduireTerrain;
+import modele.Personnage.Hero.Hero;
 import vue.ChargeurDImage;
 import vue.VueTerrain;
 import vue.vuePersonnage;
@@ -37,7 +37,7 @@ public class Controleur implements Initializable {
 	private VueTerrain vueTerrain;
 	private vuePersonnage vuePerso;
 
-	private Personnage perso;
+	private Hero perso;
 	public static char toucheDirection;
 	public static char toucheSaut;
 
@@ -54,23 +54,28 @@ public class Controleur implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		
 		Jeu j = new Jeu();
 		try {
 			
 			
 			terrain = new Terrain(new TraduireTerrain("src/ressources/main.csv").getTab());
 			vueTerrain = new VueTerrain(terrain, tilePane);
-			this.perso = new Personnage("Chang");
-			vuePerso = new vuePersonnage(pane);
+			this.perso = new Hero("Chang");
+			vuePerso = new vuePersonnage(pane,perso);
+
 
 			vuePerso.getImgVPerso().translateYProperty().bind(perso.getDeplacement().getY());
 			vuePerso.getImgVPerso().translateXProperty().bind(perso.getDeplacement().getX());
 
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Vue V = new Vue();
+		//Vue V = new Vue();
+		
+		OberservableDirection obs = new OberservableDirection(perso, vuePerso);
+		perso.idDeplacementProperty().addListener(obs);
 	}
 	
 	
@@ -79,47 +84,56 @@ public class Controleur implements Initializable {
 	@FXML
 	void clavier(KeyEvent event) throws FileNotFoundException {
 		
-		if(event.getCode() == KeyCode.D) {
-		toucheDirection='D';
-		}
-		
-	
-		
-		
 //		if(event.getCode() == KeyCode.D) {
-//			perso.getDeplacement().deplacementDroite();
-//			rightPressed.set(true);
+//		toucheDirection='D';
 //		}
+//		
 //		if(event.getCode() == KeyCode.Q) {
-//			perso.getDeplacement().deplacementGauche();
-//			leftPressed.set(true);
+//			toucheDirection = 'Q';
 //		}
+//		
 //		if(event.getCode() == KeyCode.Z) {
-//			perso.getDeplacement().deplacementHaut();
-//			upPressed.set(true);
+//			toucheSaut= 'Z';
 //		}
-//		if(event.getCode() == KeyCode.S) {
-//			perso.getDeplacement().deplacementBas();
-//			downPressed.set(true);
-//		}
-//		// bas droite
-//		if(downAndRightPressed.get()) {
-//			perso.getDeplacement().deplacementBasDroite();
-//		}
-//		if (downAndLeftPressed.get()){
-//			perso.getDeplacement().deplacementBasGauche();
-//		}
-//		if (upAndLeftPressed.get()) {
-//			perso.getDeplacement().deplacementHautGauche();
-//		}
-//		if (upAndRightPressed.get()){
-//			perso.getDeplacement().deplacementHautDroite();
-//		}
+//	}
+		
+	
+		
+		
+		if(event.getCode() == KeyCode.D) {
+			perso.getDeplacement().deplacementDroite();
+			rightPressed.set(true);
+		}
+		if(event.getCode() == KeyCode.Q) {
+			perso.getDeplacement().deplacementGauche();
+			leftPressed.set(true);
+		}
+		if(event.getCode() == KeyCode.Z) {
+			perso.getDeplacement().deplacementHaut();
+			upPressed.set(true);
+		}
+		if(event.getCode() == KeyCode.S) {
+			perso.getDeplacement().deplacementBas();
+			downPressed.set(true);
+		}
+		// bas droite
+		if(downAndRightPressed.get()) {
+			perso.getDeplacement().deplacementBasDroite();
+		}
+		if (downAndLeftPressed.get()){
+			perso.getDeplacement().deplacementBasGauche();
+		}
+		if (upAndLeftPressed.get()) {
+			perso.getDeplacement().deplacementHautGauche();
+		}
+		if (upAndRightPressed.get()){
+			perso.getDeplacement().deplacementHautDroite();
+		}
 	}
 	
-	public void tour() {
-		this.Jeu.tour
-	}
+//	public void tour() {
+//		this.Jeu.tour
+//	}
 	@FXML
 	void keyRelease(KeyEvent event) {
 		if (event.getCode() == KeyCode.D)

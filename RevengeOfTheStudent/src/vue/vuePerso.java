@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import modele.Arme;
-import modele.Personnage;
+import modele.Personnage.Hero.Hero;
 
 public class vuePerso {
 	
@@ -17,14 +17,14 @@ public class vuePerso {
 	private Image img_perso;
 	private FileInputStream fichierPerso;
 	private ImageView imgV_perso;
-	private Personnage perso;
+	private Hero perso;
 	
 	public vuePerso(Pane pane) throws FileNotFoundException {
 		this.pane = pane;
 		this.fichierPerso = rechercheImage();
 		this.img_perso = new Image(fichierPerso);
 		imgV_perso = new ImageView(img_perso);
-		this.perso = new Personnage("NomTest");
+		this.perso = new Hero("NomTest");
 		perso.setPosition(250, 400);
 	}
 	

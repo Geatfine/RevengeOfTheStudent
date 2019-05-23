@@ -2,15 +2,23 @@ package modele;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Deplacement {
 
 	private IntegerProperty x;
 	private IntegerProperty y;
+	public StringProperty dernierDeplacement;
 
 	public Deplacement ( int x, int y) {
 		this.x = new SimpleIntegerProperty(x);
 		this.y = new SimpleIntegerProperty(y);
+		this.dernierDeplacement=new SimpleStringProperty("Droite");
+	}
+	
+	public StringProperty DeplacementProperty() {
+		return this.dernierDeplacement;
 	}
 
 	public IntegerProperty getX() {
@@ -29,10 +37,12 @@ public class Deplacement {
 	}
 
 	public void deplacementDroite() {
-		this.x.set(this.x.get()+3);
+		this.x.set(this.x.get()+7);
+		this.dernierDeplacement.set("Droite");
 	}
 	public void deplacementGauche() {
-		this.x.set(this.x.get()-3);
+		this.x.set(this.x.get()-7);
+		this.dernierDeplacement.set("Gauche");
 	}
 	public void deplacementBas() {
 		this.y.set(this.y.get()+3);

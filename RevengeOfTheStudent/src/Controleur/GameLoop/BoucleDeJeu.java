@@ -5,7 +5,7 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class BoucleDeJeu {
-	public final static int FRAMEDURATION = 1;
+	public final static int FRAMEDURATION = 1000;
 	
 	private boolean estArreter;
 	private Timeline tour ;	
@@ -40,7 +40,11 @@ public class BoucleDeJeu {
 
 	private Object turn() {
 		
-System.out.println("caca");		return null;
+System.out.println("caca");	
+
+
+
+return null;
 	}
 
 }
