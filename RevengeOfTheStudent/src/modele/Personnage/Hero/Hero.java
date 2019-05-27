@@ -1,18 +1,18 @@
 package modele.Personnage.Hero;
 
+import Controleur.Controleur;
 import javafx.beans.property.StringProperty;
-import modele.Accessoire;
 import modele.Collision;
-import modele.Deplacement;
-import modele.Epee;
-import modele.Inventaire;
 import modele.Katana;
+import modele.Position;
+import modele.Movable.Movable;
 import modele.Personnage.Item.Arme;
 
-public class Hero {
+public class Hero extends Movable{
 	
 
-	private Deplacement moove;
+	private Position position;
+	private char mouvementSuivant;
 
 	private String nom;
 	private int hp;
@@ -20,17 +20,22 @@ public class Hero {
 	private int defense;
 	private int mana;
 	private int vitesse;
-	private Inventaire inventaire;
-	private Accessoire accessoire;
+	
+	private int energie;
+	//private Inventaire inventaire;
+	//private Accessoire accessoire;
 	private Arme a;
 	private StringProperty idArme ;
 	private StringProperty idDeplacement;
 	private Collision colision;
 	
 
+
 	
 	
 	public Hero(String nom, Collision c) {
+		if(c == null)
+			throw new Error("sss");
 		this.nom=nom;
 		this.a= new Katana();
 		this.hp=100;
@@ -38,13 +43,20 @@ public class Hero {
 		this.defense=0;
 		this.mana=0;
 		this.vitesse=1;
-		this.inventaire= new Inventaire();
+		//this.inventaire= new Inventaire();
 		this.idArme= this.a.idProperty();
+		this.energie=0;
 
-		moove = new Deplacement (0,0, c);
+		position = new Position (0,0, c);
+		this.colision=c;
+		this.idDeplacement=this.position.dernierDeplacement;
+		position.graviter();
+	}
+	
+	
+	public void nouveauDeplacement(char mouv) {
+		this.mouvementSuivant=mouv;
 		
-		this.idDeplacement=this.moove.dernierDeplacement;
-		moove.graviter();
 	}
 	
 	public String getIdArme() {
@@ -95,9 +107,45 @@ public class Hero {
 		this.defense = defense;
 	}
 
-	public Deplacement getDeplacement() {
-		return this.moove;
+	public Position getDeplacement() {
+		return this.position;
 	}
+	
+//	public void tomber(int gravite) {
+//		this.getDeplacement().deplacementBas();
+//		
+//		
+//	}
+
+
+	public void tic() {
+		if(!this.colision.verifieCase(this.position.getX().get(), this.position.getY().get())){
+			char c =Controleur.toucheSaut;
+			Controleur.toucheSaut = Controleur.PASBOUGER;
+			this.energie=0;
+			//System.out.println(c);
+			if(c==Controleur.DIRECTIONHAUT)
+				this.energie+=150;
+			
+				
+		}
+		else
+			this.energie--;
+		int y = this.position.testeTranslationSaut(energie);
+		this.position.deplacementVertical(y);
+		char d = Controleur.toucheDirection;
+		Controleur.toucheDirection = Controleur.PASBOUGER;
+		
+		if(d==Controleur.DIRECTIONGAUCHE)
+		this.position.deplacementLateral(-2);
+		
+		if(d==Controleur.DIRECTIONDROITE)
+			this.position.deplacementLateral(2);
+		//System.out.println(energie+"   "+y);
+		
+	}
+	
+	
 	
 	
 //	public StringProperty String() {

@@ -2,7 +2,10 @@ package modele;
 
 public class Terrain {
 	
+	
+	
 	private int[][] terrain ;
+	
 	
 	public Terrain (int[][] terrain) {
 		

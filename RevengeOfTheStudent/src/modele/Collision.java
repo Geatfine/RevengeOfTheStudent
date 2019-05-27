@@ -10,6 +10,17 @@ package modele;
 	    public Collision(Terrain terrain) {
 	        this.casesTerrain = terrain.getList();
 	    }
+	    
+	    
+	    public boolean verifieCase(int x, int y) {
+	    	x/=16;
+	    	y/=16;
+	    	if (x >= 0 && x < 50) 
+	    		if(casesTerrain[y][x]==151)
+	    			return true;
+	    	
+	    	return false;
+	    }
 
 	    public boolean verifieCaseDroite(int x, int y) {
 	        if (x >= 0 && x < 50) 
@@ -35,6 +46,9 @@ package modele;
 	        
 	        return false;
 	    }
+	    
+	    
+	    
 
 	    public boolean verifieCaseBas(int x, int y) {
 	        if (y >= 0 && y < 50) 
