@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane onKeyPressed="#clavier" onKeyReleased="#keyRelease" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur.Controleur">
+   <center>
+      <Pane fx:id="pane" onMouseClicked="#souris" prefHeight="800.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <TilePane fx:id="tilePane" prefHeight="800.0" prefWidth="800.0" />
+            <HBox fx:id="inventaire" focusTraversable="true" prefHeight="177.0" prefWidth="315.0" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
