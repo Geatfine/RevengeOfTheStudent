@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 
 public class VueInventaire {
 	
-	private HBox inventaire;
+	private TilePane inventaire;
 	private ArrayList<ImageView> list;
 	private Image img = new Image("/ressources/coeur.png");
 	private ImageView view = new ImageView(img);
 	private String s;
 	private int compteur = -1;
-	public VueInventaire(HBox inventaire) {
+	public VueInventaire(TilePane inventaire) {
 		
 		this.inventaire= inventaire;
 		this.s="/ressources/vide.png";
@@ -22,7 +22,7 @@ public class VueInventaire {
 		this.remplir();
 		this.inventaire.setMaxHeight(320);
 		this.inventaire.setMaxWidth(800);
-		
+		this.inventaire.setVisible(false);
 	}
 	
 	public void initInventaire() {
@@ -55,7 +55,9 @@ public class VueInventaire {
 			this.initInventaire();
 	}
 	
-	
+	public void reduireOpacité(int x , int y ) {
+		inventaire.setOpacity(0.5);
+	}
 	
 
 }

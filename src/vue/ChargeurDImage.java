@@ -13,11 +13,6 @@ import modele.Personnage.Hero.Hero;
 
 public class ChargeurDImage {
 	
-	
-	
-	
-	
-	
 	private int width;
 	private int pixel;
 	private BufferedImage img;

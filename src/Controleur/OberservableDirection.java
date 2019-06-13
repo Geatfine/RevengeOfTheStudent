@@ -4,21 +4,19 @@ import java.io.FileNotFoundException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import modele.Personnage.Personnages;
 import modele.Personnage.Hero.Hero;
-import vue.Vue;
 import vue.vuePersonnage;
 
 public class OberservableDirection implements ChangeListener<String>{
 	
-	private Personnages perso;
-	private Vue vue;
+	private Hero hero;
+	private vuePersonnage vue;
 	
 	
 
-	public OberservableDirection(Personnages perso, Vue  vue) {
+	public OberservableDirection(Hero hero, vuePersonnage vue) {
 		super();
-		this.perso = perso;
+		this.hero = hero;
 		this.vue = vue;
 	}
 
@@ -27,7 +25,7 @@ public class OberservableDirection implements ChangeListener<String>{
 	@Override
 	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		
-		this.vue.setStr(this.perso.getIdArme()+newValue);
+		this.vue.setStr(this.hero.getIdArme()+newValue);
 		try {
 			this.vue.setImageV();
 		} catch (FileNotFoundException e) {

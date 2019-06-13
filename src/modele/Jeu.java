@@ -1,7 +1,7 @@
 package modele;
 
 import modele.Movable.Movable;
-import modele.Personnage.MarioCataldie;
+import modele.Personnage.Ennemie.MarioCataldie;
 import modele.Personnage.Hero.Hero;
 import vue.VueTerrain;
 import vue.vuePersonnage;
@@ -17,10 +17,10 @@ public class Jeu {
 	
 	public Jeu() {
 	
-   terrain = new Terrain(new TraduireTerrain().getTab());
+   terrain = new Terrain(new TraduireTerrain().getListTerrain());
 	collision= new Collision(terrain);
-	this.hero= new Hero("Chang", collision);
-	this.mario = new MarioCataldie(collision);	   
+	this.hero= new Hero("Chang", collision,terrain);
+	this.mario = new MarioCataldie("mario", collision,terrain);	   
 	}
 	
 	
@@ -50,9 +50,9 @@ public class Jeu {
 	public void tour() {
 		
 	
-
+		this.terrain =new Terrain(new TraduireTerrain().getListTerrain());
 		this.hero.tic();
-		this.mario.ticEnnemie(this.hero.getPosition());
+		this.mario.tic();
 		
 	}
 	
