@@ -10,7 +10,7 @@
       <Pane fx:id="pane" onMouseClicked="#souris" prefHeight="800.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <TilePane fx:id="tilePane" prefHeight="800.0" prefWidth="800.0" />
-            <HBox fx:id="inventaire" focusTraversable="true" prefHeight="177.0" prefWidth="315.0" />
+            <TilePane fx:id="inventaire" prefHeight="49.0" prefWidth="397.0" />
          </children>
       </Pane>
    </center>
