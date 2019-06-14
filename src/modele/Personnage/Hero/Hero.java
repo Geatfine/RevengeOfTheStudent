@@ -1,70 +1,65 @@
 package modele.Personnage.Hero;
 
 import Controleur.Controleur;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import modele.Collision;
-import modele.Epee;
+import modele.Inventaire;
 import modele.Katana;
 import modele.Position;
-import modele.Movable.Movable;
+import modele.Personnage.Personnages;
 import modele.Personnage.Item.Arme;
+import modele.item.Block;
+import modele.item.Item;
 
-public class Hero extends Movable{
+public class Hero extends Personnages{
 	
-
-	private Position position;
-	private char mouvementSuivant;
-
-	private String nom;
-	private int hp;
-	private int attaque;
-	private int defense;
+	
 	private int mana;
-	private int vitesse;
-	private int energie;
-	//private Inventaire inventaire;
-	//private Accessoire accessoire;
 	private Arme a;
 	private StringProperty idArme ;
-	private StringProperty idDeplacement;
-	private Collision colision;
-	private StringProperty item;
-	
+	private Item item;
+	public static Hero h;
+	private Inventaire inventaire;
 
 
-	
 	
 	public Hero(String nom, Collision c) {
+		
+		super(nom, c);
+		Hero.h=this;
 		if(c == null)
 			throw new Error("sss");
-		this.nom=nom;
 		this.a= new Katana();
-		this.hp=100;
-		this.attaque=0;
-		this.defense=0;
 		this.mana=0;
-		this.vitesse=1;
-		//this.inventaire= new Inventaire();
+		item = new Item(10, "test", 20);
+		this.inventaire=new Inventaire();
 		this.idArme= this.a.idProperty();
-		this.energie=0;
-		this.item = new SimpleStringProperty("10");
 		position = new Position (200,200, c);
-		this.colision=c;
 		this.idDeplacement=this.position.dernierDeplacement;
 	
 	}
 	
-	
-	public void nouveauDeplacement(char mouv) {
-		this.mouvementSuivant=mouv;
-		
+	@Override
+	public String getNom() {
+		return this.nom;
 	}
 	
+
+	@Override
+	public IntegerProperty hpProperty() {
+		return this.hp;
+	}
+	
+	@Override
 	public String getIdArme() {
 		return this.idArme.get();
 	}
 	
+	
+	@Override
 	public String action() {
 		return this.idArme.get() + this.idDeplacement.get();
 	}
@@ -77,7 +72,7 @@ public class Hero extends Movable{
 		return this.idDeplacement;
 	}
 
-
+	@Override
 	public int getDegatDattaque() {
 		if(this.a == null)
 			return this.attaque;
@@ -85,12 +80,12 @@ public class Hero extends Movable{
 		//return (a==null)? this.attaque:this.attaque + a.getDegat();
 	}
 
-	public void attaquer (Hero p) {
-		p.recevoirDegagt(this.getDegatDattaque());
+	public void attaquer (Personnages p) {
+		p.recevoirDegat(this.getDegatDattaque());
 	}
 
-	public void recevoirDegagt(int degat) {
-		this.hp-= degat;
+	public void recevoirDegat(int degat) {
+		this.hp.set(this.hp.get()-degat);
 		
 	}
 	protected void ajouterArme(Arme a) {
@@ -109,8 +104,11 @@ public class Hero extends Movable{
 		this.defense = defense;
 	}
 
-	public Position getDeplacement() {
+	public Position getPosition() {
 		return this.position;
+	}
+	public void  merciHomps() {
+		this.vitesse=1;
 	}
 	
 //	public void tomber(int gravite) {
@@ -123,7 +121,8 @@ public class Hero extends Movable{
 //	}
 
 
-	public void tic() {
+	public void game() {
+		
 		if(!this.colision.verifieCase(this.position.xProperty().get(), this.position.yProperty().get())){
 			char c =Controleur.toucheSaut;
 			Controleur.toucheSaut = Controleur.PASBOUGER;
@@ -134,7 +133,7 @@ public class Hero extends Movable{
 			
 				
 		}
-		else
+		else 
 			this.energie--;
 		int y = this.position.testeTranslationSaut(energie);
 		this.position.deplacementVertical(y);
@@ -143,18 +142,76 @@ public class Hero extends Movable{
 		Controleur.toucheDirection = Controleur.PASBOUGER;
 		
 		
-		if(d==Controleur.DIRECTIONGAUCHE && this.colision.verifieCaseGauche((this.position.xProperty().get())/16, this.position.yProperty().get()/16))  
-		this.position.deplacementLateral(-3);
-		if(d==Controleur.DIRECTIONDROITE && this.colision.verifieCaseDroite((this.position.xProperty().get())/16, this.position.yProperty().get()/16))
-			this.position.deplacementLateral(3);
-		//System.out.println(energie+"   "+y);
 		
+		if(d==Controleur.DIRECTIONDROITE) {
+			if (vitesse == 0)
+				vitesse=1;
+			vitesse++;
+			if(vitesse>=13)
+				vitesse=13;
+		this.position.deplacementLateral(this.position.testeTranslationLateral(vitesse));
+		
+		}
+		if( d==Controleur.DIRECTIONGAUCHE) {
+			
+		
+			if (vitesse == 0) 
+				vitesse=-1;
+			vitesse--;
+			
+		
+			if(vitesse<=(-13))
+				vitesse=-13;
+			
+			this.position.deplacementLateral(this.position.testeTranslationLateral(vitesse));
+			
+			if(this.hp.get()<=0)
+				super.tue();
+
+			
+		}
+		
+			
+	}
+	// non fini
+	public void faireAction(int x, int y) {
+
+		this.poserBlock(x, y);
+		this.casserBlock(x, y);
+
+	}
+
+	public boolean estPlein() {
+		return this.inventaire.estPlein();
+	}
+
+	public void prendreItemMain(Item item2) {
+
+	}
+
+	public IntegerProperty idItemProperty() {
+		return this.item.getItemProperty();
+	}
+
+	public void poserBlock(int x, int y) {
+		this.position.transmetTerrain(x / 16, y / 16, this.item.getItem());
+	}
+
+	public Inventaire getInventaire() {
+		return this.inventaire;
+	}
+
+	public void ramasserItem(Item i) {
+		this.inventaire.addItem(i);
+	}
+
+	public void casserBlock(int x, int y) {
+
+		this.position.transmetTerrain(x / 16, y / 16, 151);
+		this.ramasserItem(new Block("grass", 24, 10));
+
 	}
 	
 	
-	
-	
-//	public StringProperty String() {
-//		return this.idArme+this.idDeplacement;
-//	}
+
 }

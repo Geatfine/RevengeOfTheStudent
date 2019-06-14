@@ -9,19 +9,28 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class TraduireTerrain {
 
 	private File f;
 
 	private int[][] tab;
+	private ObservableList<Integer> list;
 
 	// static final pour taille tableau //class de parametrage / json
-	public TraduireTerrain(){
-
+	public TraduireTerrain() {
+		this.list = FXCollections.<Integer>observableArrayList();
 		this.f = new File("src/ressources/main.csv");
 		this.tab = new int[50][50];
+
 		this.initTerrain();
 
+	}
+
+	public ObservableList<Integer> getListTerrain() {
+		return this.list;
 	}
 
 	public int[][] getTab() {
@@ -30,7 +39,7 @@ public class TraduireTerrain {
 
 	public void initTerrain() {
 
-		BufferedReader bfr=null;
+		BufferedReader bfr = null;
 		try {
 			bfr = new BufferedReader(new FileReader(f));
 		} catch (FileNotFoundException e) {
@@ -50,6 +59,7 @@ public class TraduireTerrain {
 				for (int j = 0; j < all_Line.length; j++) {
 
 					this.tab[i][j] = Integer.parseInt(all_Line[j]);
+					this.list.add(Integer.parseInt(all_Line[j]));
 
 				}
 				i++;

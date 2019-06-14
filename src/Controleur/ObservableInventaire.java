@@ -1,27 +1,29 @@
 package Controleur;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import modele.item.Item;
 import modele.Personnage.Hero.Hero;
 import vue.VueInventaire;
 
-public class ObservableInventaire implements ChangeListener<String> {
+public class ObservableInventaire implements ListChangeListener<Item> {
 
 	private Hero hero;
 	private VueInventaire inventaire;
-	
-	
-	public ObservableInventaire(Hero hero,VueInventaire inventaire) {
-		this.hero=hero;
-		this.inventaire=inventaire;
+
+	public ObservableInventaire(Hero hero, VueInventaire inventaire) {
+		this.hero = hero;
+		this.inventaire = inventaire;
 	}
+
 	@Override
-	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		
-		this.inventaire.changerImage(this.hero.getIdArme()+newValue);
-		System.out.println(this.hero.getIdArme()+newValue);
-		this.inventaire.remplir();
-		
+	public void onChanged(Change<? extends Item> c) {
+		System.out.println("change");
+		if (c.next()) {
+			this.inventaire.changerImage(Integer.toString(
+					this.hero.getInventaire().getItem(this.hero.getInventaire().size() - 1).getItemProperty().get()));
+			this.inventaire.ajouteImage();
+			this.inventaire.remplir();
+		}
 	}
 
 }

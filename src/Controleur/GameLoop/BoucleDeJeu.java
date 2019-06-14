@@ -1,5 +1,7 @@
 package Controleur.GameLoop;
 
+import java.io.FileNotFoundException;
+
 import Controleur.Controleur;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -41,12 +43,19 @@ public class BoucleDeJeu {
 		this.tour.setCycleCount(Timeline.INDEFINITE);
 		KeyFrame frame = new KeyFrame(
 				Duration.millis(FRAMEDURATION),
-				(ev->turn())
+				(ev->{
+					try {
+						turn();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				})
 		);
 		this.tour.getKeyFrames().add(frame);
 	}
 
-	private Object turn() {
+	private Object turn() throws FileNotFoundException {
 		
 		this.controleur.tour();
 

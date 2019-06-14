@@ -38,22 +38,22 @@ public class VueTerrain {
 		this.imgTileSet = new Image(fichierTileSet);
 
 		this.tileP.setPrefColumns(50);
-		for (int i = 0; i < this.terrain.getTailleY(); i++) {
-			for (int j = 0; j < this.terrain.getTailleX(); j++) {
+		for (int i = 0; i < this.terrain.getTailleX(); i++) {
+			
 
 				afficheCarre = new ImageView(this.imgTileSet);
 				// System.out.println("i = " + i);
-				afficherImage(afficheCarre, i, j);
-			}
+				afficherImage(afficheCarre, i);
+			
 		}
 		// System.out.println("Largeur" + this.terrain.getTailleX());
 		// System.out.println("Hauteur" + this.terrain.getTailleY());
 	}
 
-	public void afficherImage(ImageView img, int i, int j) {
+	public void afficherImage(ImageView img, int i) {
 		// Recuperation du Tile
 
-		int tile = this.terrain.getCase(i, j);
+		int tile = this.terrain.getCase(i);
 
 		// Conversion du premier charactere du tile ( correspondant aux coordonnée du
 		// tile sur l'axe X du tile Set)
@@ -68,6 +68,10 @@ public class VueTerrain {
 		img.setViewport(new Rectangle2D(posX * 16, posY * 16, 16, 16));
 		this.tileP.getChildren().add(img);
 	}
+	
+	public void raffraichirTerrain() throws FileNotFoundException {
+		this.tileP.getChildren().clear();
+		initTerrain();
+	}
 
 }
-

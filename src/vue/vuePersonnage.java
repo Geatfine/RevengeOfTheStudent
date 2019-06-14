@@ -7,30 +7,23 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import modele.Movable.Movable;
 import modele.Personnage.Hero.Hero;
 
-public class vuePersonnage {
+public class vuePersonnage extends Vue{
 	
 	
-	private Pane pane;
-	private Image img_perso;
-	private FileInputStream fichierPerso;
-	private String s;
 	
-	private ImageView imgV_perso;
 	
-	public vuePersonnage(Pane pane, Hero hero) throws FileNotFoundException {
-		this.pane = pane;
+	public vuePersonnage(Pane pane, Movable hero) {
+		super(pane);
 		this.s=hero.action();
-		this.fichierPerso = new FileInputStream(this.add());
-		this.img_perso = new Image(fichierPerso);
+		this.img_perso = new Image(this.add());
 		imgV_perso = new ImageView(img_perso);
 		initPerso();
 	}
 	
-	public void initPerso() throws FileNotFoundException{
-		//imgV_perso.setViewport(new Rectangle2D(0,0,128,128));
-		
+	public void initPerso() {
 		
 		this.pane.getChildren().add(this.imgV_perso);
 	}
@@ -45,20 +38,17 @@ public class vuePersonnage {
 		this.pane.getChildren().remove(imgV_perso);
 	}
 	
-	public void setImageV() throws FileNotFoundException {
-		this.imgV_perso.setImage(new Image(this.setFile()));
+	public void setImageV(){
+		this.imgV_perso.setImage(new Image("/ressources/ImagePerso/" + this.s+".png"));
 		this.pane.getChildren().remove(imgV_perso);
 		this.pane.getChildren().add(this.imgV_perso);
 	}
 	
 	public String add() {
-		return "src/ressources/ImagePerso/" + this.s+".png";
+	System.out.println("/ressources/ImagePerso/" + this.s+".png");
+		return "/ressources/ImagePerso/" + this.s+".png";
 	}
-	public FileInputStream setFile() throws FileNotFoundException {
-		return this.fichierPerso = new FileInputStream(this.add());
-		
-	}
-	
+
 //	public void changerImage(String s , int x, int y) throws FileNotFoundException {
 //		this.fichierPerso = new FileInputStream("src/ressources/ImagePerso/" + s +".png");
 //		this.img_perso = new Image(this.fichierPerso);
@@ -88,6 +78,12 @@ public class vuePersonnage {
 //	}
 	public ImageView getImgVPerso () {
 		return this.imgV_perso;
+	}
+
+	@Override
+	public void clear() {
+	this.pane.getChildren().remove(this.imgV_perso);
+		
 	}
 	
 }

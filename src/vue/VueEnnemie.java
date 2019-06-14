@@ -1,36 +1,33 @@
 package vue;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import modele.Personnage.Ennemie.MarioCataldie;
-import modele.Personnage.Hero.Hero;
+import javafx.scene.paint.Color;
+import modele.Movable.Movable;
 
-public class VueEnnemie {
-	private Pane pane;
-	private Image img_perso;
-	private FileInputStream fichierPerso;
-	private String s;
+public class VueEnnemie extends Vue{
 	
-	private ImageView imgV_perso;
+	private Label label;
 	
-	 public VueEnnemie(Pane pane, MarioCataldie mechant) throws FileNotFoundException {
-		this.pane = pane;
-		this.s=mechant.action();
-		this.fichierPerso = new FileInputStream(this.add());
-		this.img_perso = new Image(fichierPerso);
+	 public VueEnnemie(Pane pane, Movable mechant) {
+		super(pane);
+		this.s=mechant.action()+"Gauche";
+
+		this.img_perso = new Image(this.concatenation());
 		imgV_perso = new ImageView(img_perso);
+		this.label = new Label();
+		label.setTextFill(Color.web("#ff0000", 0.8));
 		initPerso();
+		this.label.textProperty().bind(mechant.hpProperty().asString());
 	}
 	
-	public void initPerso() throws FileNotFoundException{
-		//imgV_perso.setViewport(new Rectangle2D(0,0,128,128));
-		
-		
+	public void initPerso() {
 		this.pane.getChildren().add(this.imgV_perso);
+		this.pane.getChildren().add(this.label);
 	}
 	
 	public void setStr(String s) {
@@ -41,21 +38,21 @@ public class VueEnnemie {
 	}
 	public void removeImage() {
 		this.pane.getChildren().remove(imgV_perso);
+		this.pane.getChildren().remove(this.label);
 	}
 	
-	public void setImageV() throws FileNotFoundException {
-		this.imgV_perso.setImage(new Image(this.setFile()));
+	public void setImageV() {
+		
+			this.imgV_perso.setImage(new Image(this.concatenation()));
+		
 		this.pane.getChildren().remove(imgV_perso);
 		this.pane.getChildren().add(this.imgV_perso);
 	}
 	
-	public String add() {
-		return "src/ressources/ImagePerso/" + this.s+".png";
+	public String concatenation() {
+		return "/ressources/ImagePerso/" + this.s+".png";
 	}
-	public FileInputStream setFile() throws FileNotFoundException {
-		return this.fichierPerso = new FileInputStream(this.add());
-		
-	}
+	
 	
 //	public void changerImage(String s , int x, int y) throws FileNotFoundException {
 //		this.fichierPerso = new FileInputStream("src/ressources/ImagePerso/" + s +".png");
@@ -64,6 +61,11 @@ public class VueEnnemie {
 //		this.pane.getChildren().add(new ImageView(img_perso));
 //		
 //	}
+	
+
+	public Label getLabel () {
+		return this.label;
+	}
 	
 	
 	
@@ -86,6 +88,12 @@ public class VueEnnemie {
 //	}
 	public ImageView getImgVPerso () {
 		return this.imgV_perso;
+	}
+
+	@Override
+	public void clear() {
+		this.pane.getChildren().remove(this.imgV_perso);
+		
 	}
 
 }
